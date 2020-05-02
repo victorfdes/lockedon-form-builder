@@ -3,9 +3,13 @@
     <v-row class="text-center">
       <v-col>
         <v-text-field
-            label="Office ID"
-            v-model="officeID"
-            :rules="[requiredRule]"
+            v-for="field in formFields"
+            :key="field.key"
+            :label="field.label"
+            :hint="field.hint"
+            :rules="field.rules ? field.rules : []"
+            persistent-hint
+            v-model="formData[field.key]"
             filled />
       </v-col>
       <v-col>
@@ -19,14 +23,34 @@
 </template>
 
 <script>
+  const rules = {
+    requiredRule: value => !!value || 'Required',
+  }
+
   export default {
     name: 'Form',
 
     data: () => ({
-      officeID: '',
-
-      // Rules
-      requiredRule: value => !!value || 'Required'
+      formData: {},
+      formFields: [
+        {
+          key: 'officeID',
+          label: 'Office ID',
+          hint: 'Needs to be a valid LockedOn UUID of an existing office with enabled enquiry access',
+          rules: [rules.requiredRule]
+        }, {
+          key: 'referralSource',
+          label: 'Referral Source',
+          hint: 'Needs to be the same as what it is in LockedOn',
+          rules: [rules.requiredRule]
+        }, {
+          key: 'property',
+          label: 'Property ID',
+          hint: `Needs to be a valid LockedOn UUID, belonging to the given office. If not then all enquiries
+will not be linked to a property`,
+          rules: [rules.requiredRule]
+        }
+      ]
     }),
 
     computed: {
