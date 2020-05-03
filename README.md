@@ -1,4 +1,8 @@
-# lockedon-form-builder
+# Locked On Iframe form builder
+
+Use this to build your LockedOn iframe forms. It remembers the last options you typed in and displays a preview form in real time.
+
+Preview Project: [https://victor-fernandes.com/lockedon-form-builder/](https://victor-fernandes.com/lockedon-form-builder/)
 
 ## Project setup
 ```
