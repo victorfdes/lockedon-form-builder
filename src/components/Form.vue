@@ -90,8 +90,8 @@
 
     data: () => ({
       formData: {
-        officeID: 'a',
-        referralSource: 'b',
+        officeID: '',
+        referralSource: '',
         timeout: 10,
         target: '_top',
         color: '#FF7F00',
@@ -174,6 +174,23 @@ form was successfully submited`
         }
       ]
     }),
+
+    methods: {
+      restoreFromLocal () {
+        if (localStorage.getItem('lockedon-form-state')) {
+          this.formData = JSON.parse(localStorage.getItem('lockedon-form-state'))
+        }
+      },
+
+      saveToLocal () {
+        localStorage.setItem("lockedon-form-state", JSON.stringify(this.formData));
+      }
+    },
+
+    mounted () {
+      this.restoreFromLocal()
+      setInterval(() => {this.saveToLocal()}, 5000)
+    },
 
     computed: {
       textAreaValue () {
