@@ -36,6 +36,10 @@
             label="Use Recaptcha" />
 
         <div class="title mb-4">Other Options</div>
+        <p class="label">Submit Color</p>
+        <div class="d-flex justify-center">
+          <v-color-picker v-model="formData.color" flat mode="rgba" />
+        </div>
 
         <div class="title mb-4">Default Values</div>
         <v-text-field
@@ -90,6 +94,7 @@
         referralSource: 'b',
         timeout: 10,
         target: '_top',
+        color: '#FF7F00',
 
         // Placeholders
         placeName: 'Full Name',
@@ -220,7 +225,7 @@ ${this.formData.captcha ? '&use-recaptcha=1' : ''}
 "margin":"0 0 0 1.5px",
 "height":"147px"},
 "input[name=name]":{"place":"YourName"},
-"input[type=submit]":{"background":"rgb(240,78,35)",
+"input[type=submit]":{"background":"${this.colorSelected}",
 "box-shadow":"none", "padding":"12px",
 "font-family":"Montserrat-Bold, sans-serif",
 "float":"none","overflow":"hidden",
@@ -245,6 +250,13 @@ ${this.formData.placeEmail ? '"email":"' + this.formData.placeEmail + '",' : ''}
 ${this.formData.placeMobilePhone ? '"mobile-phone":"' + this.formData.placeMobilePhone + '",' : ''}
 ${this.formData.placeComments ? '"comments":"' + this.formData.placeComments + '"' : ''}
 }`.split(/\n/).join('')
+      },
+
+      colorSelected() {
+        let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.formData.color);
+        return result
+          ? `rgb(${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)})`
+          : 'rgb(240,78,35)';
       }
     },
   }
